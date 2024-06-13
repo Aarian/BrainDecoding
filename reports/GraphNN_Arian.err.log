@@ -1,0 +1,64 @@
+Traceback (most recent call last):
+  File "/home/arian/anaconda3/lib/python3.7/site-packages/jupyter_cache/executors/utils.py", line 64, in single_nb_execution
+    **kwargs,
+  File "/home/arian/anaconda3/lib/python3.7/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/home/arian/anaconda3/lib/python3.7/site-packages/jupyter_core/utils/__init__.py", line 98, in wrapped
+    return loop.run_until_complete(inner)
+  File "/home/arian/anaconda3/lib/python3.7/asyncio/base_events.py", line 583, in run_until_complete
+    return future.result()
+  File "/home/arian/anaconda3/lib/python3.7/site-packages/nbclient/client.py", line 706, in async_execute
+    cell, index, execution_count=self.code_cells_executed + 1
+  File "/home/arian/anaconda3/lib/python3.7/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/home/arian/anaconda3/lib/python3.7/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Import libs
+import numpy as np
+import nibabel as nib
+from nilearn import plotting
+from nilearn.image import new_img_like
+import h5py
+import nilearn
+from nilearn.input_data import NiftiLabelsMasker
+import pandas as pd
+import pickle
+from collections import Counter
+import warnings
+warnings.filterwarnings(action='once')
+import nilearn.connectome
+
+------------------
+
+----- stderr -----
+/home/arian/anaconda3/lib/python3.7/site-packages/nilearn/__init__.py:67: FutureWarning: Python 3.7 support is deprecated and will be removed in release 0.12 of Nilearn. Consider switching to Python 3.9 or 3.10.
+  _python_deprecation_warnings()
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mImportError[0m                               Traceback (most recent call last)
+[0;32m<ipython-input-2-54ac80d33560>[0m in [0;36m<module>[0;34m[0m
+[1;32m      2[0m [0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      3[0m [0;32mimport[0m [0mnibabel[0m [0;32mas[0m [0mnib[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 4[0;31m [0;32mfrom[0m [0mnilearn[0m [0;32mimport[0m [0mplotting[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      5[0m [0;32mfrom[0m [0mnilearn[0m[0;34m.[0m[0mimage[0m [0;32mimport[0m [0mnew_img_like[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      6[0m [0;32mimport[0m [0mh5py[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.7/site-packages/nilearn/plotting/__init__.py[0m in [0;36m<module>[0;34m[0m
+[1;32m     52[0m [0;34m[0m[0m
+[1;32m     53[0m [0;34m[0m[0m
+[0;32m---> 54[0;31m [0m_set_mpl_backend[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     55[0m [0;34m[0m[0m
+[1;32m     56[0m [0;31m###############################################################################[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.7/site-packages/nilearn/plotting/__init__.py[0m in [0;36m_set_mpl_backend[0;34m()[0m
+[1;32m     32[0m         ):
+[1;32m     33[0m             raise ImportError(
+[0;32m---> 34[0;31m                 [0;34mf"A matplotlib version of at least "[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     35[0m                 [0;34mf"{OPTIONAL_MATPLOTLIB_MIN_VERSION} "[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     36[0m                 [0;34mf"is required to use nilearn. {mpl_version} was found. "[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mImportError[0m: A matplotlib version of at least 3.3.0 is required to use nilearn. 3.1.3 was found. Please upgrade matplotlib
+
