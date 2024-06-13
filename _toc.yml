@@ -6,4 +6,3 @@ root: intro
 chapters:
 - file: markdown
 - file: GraphNN_Arian
-- file: markdown-notebooks
