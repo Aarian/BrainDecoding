@@ -8,7 +8,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Friends Dataset &#8212; My sample book</title>
+    <title>Brain Decoding &#8212; My sample book</title>
   
   
   
@@ -61,11 +61,12 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'GraphNN_Arian';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Notebooks with MyST Markdown" href="markdown-notebooks.html" />
-    <link rel="prev" title="Markdown Files" href="markdown.html" />
+    <link rel="prev" title="Brain Decoding using Beta scores and Graph Neural Networks" href="markdown.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -152,18 +153,13 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="intro.html">
-                    Welcome to your Jupyter Book
+                    Brain Decoding Using Connectivity Informed Models
                 </a>
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown Files</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Friends Dataset</a></li>
-
-
-
-
-<li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
+<li class="toctree-l1"><a class="reference internal" href="markdown.html">Brain Decoding using Beta scores and Graph Neural Networks</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Brain Decoding</strong></a></li>
 </ul>
 
     </div>
@@ -347,7 +343,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Friends Dataset</h1>
+    <h1>Brain Decoding</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -357,13 +353,24 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Friends Dataset</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#things-dataset">Things Dataset</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-construction">Graph Construction</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#random-graph">Random Graph</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#locading-time-series-to-standard-format">Locading Time series to standard format</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#friends-dataset"><strong>Friends Dataset</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#things-dataset"><strong>Things Dataset</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-construction"><strong>Graph Construction</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#random-graph"><strong>Random Graph</strong></a></li>
 </ul>
-
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-validation-test"><strong>Train, Validation, Test</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#split-dataset"><strong>Split Dataset</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-graph-convolutional-neural-network-model"><strong>Building the Graph Convolutional Neural Network Model</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grpah-training"><strong>Grpah Training</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#random-grpah-training"><strong>Random grpah Training</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-methods"><strong>Other methods</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#disscusion"><strong>Disscusion</strong></a></li>
+</ul>
+</li>
+</ul>
             </nav>
         </div>
     </div>
@@ -374,7 +381,12 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <div class="cell docutils container">
+  <div class="tex2jax_ignore mathjax_ignore section" id="brain-decoding">
+<h1><strong>Brain Decoding</strong><a class="headerlink" href="#brain-decoding" title="Permalink to this heading">#</a></h1>
+<p>In this <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code> file, we are going to investigate the Brain Decoding stage as mini problem.
+Brain decoding normally revoles around decoding the encoded information by brain into different kind of outputs. This output could be classification task like Human action recognition, or a gerative task, such as brain image decoding, and descovering the input stimuli.</p>
+<p>Before we start, we need to import and install some important libraries to work with.</p>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%%capture
 ! pip install nilearn
@@ -439,7 +451,8 @@ document.write(`
 </div>
 </div>
 <div class="section" id="friends-dataset">
-<h1>Friends Dataset<a class="headerlink" href="#friends-dataset" title="Permalink to this heading">#</a></h1>
+<h2><strong>Friends Dataset</strong><a class="headerlink" href="#friends-dataset" title="Permalink to this heading">#</a></h2>
+<p>Friends dataset, is the collection of Brain activities of the people watching Friends TV-series. This dataset is hosted by Institut universitaire de gériatrie de Montréal (IUGM). To visualize it, we use <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">nilearn</span> <span class="pre">import</span> <span class="pre">plotting</span></code> for plotting the actual Brain image and the parcellations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nilearn</span> <span class="kn">import</span> <span class="n">plotting</span>
@@ -467,7 +480,9 @@ document.write(`
 </div>
 </div>
 <div class="section" id="things-dataset">
-<h1>Things Dataset<a class="headerlink" href="#things-dataset" title="Permalink to this heading">#</a></h1>
+<h2><strong>Things Dataset</strong><a class="headerlink" href="#things-dataset" title="Permalink to this heading">#</a></h2>
+<p><a class="reference external" href="https://things-initiative.org/">Things dataset</a>, is a collection of brain activities (FMRI) data, for different categories.
+Here we map the <span class="math notranslate nohighlight">\(\beta\)</span> scores representation, of each voxcel to to 3d shape of the brain structure. And then we make an average over each parcel. Here the first image is the <span class="math notranslate nohighlight">\(\beta\)</span> score mapping to the brain voxcels, and the second one is the average values of the <span class="math notranslate nohighlight">\(\beta\)</span> over different paracels of the brain. Please note that <span class="math notranslate nohighlight">\(\beta\)</span> score, is simply the coefficients of a linear model fitted to each FMRI signal voxcel.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -582,6 +597,8 @@ ATLAS shape (71, 91, 71)
 <img alt="_images/a8bc3d66c04df3bf9c4be522785a94f3f7174b78f5fd927ac402f4ba4b3e1a45.png" src="_images/a8bc3d66c04df3bf9c4be522785a94f3f7174b78f5fd927ac402f4ba4b3e1a45.png" />
 </div>
 </div>
+<p>###<strong>Friends Dataset Connectome</strong>
+Here we plot the connectome of the Friends dataset, to get the connectivuty map of different Brain parcels together. Function <code class="docutils literal notranslate"><span class="pre">nilearn.connectome.ConnectivityMeasure</span></code> plots the connectomes, and <code class="docutils literal notranslate"><span class="pre">reorder=True</span></code> argument in <code class="docutils literal notranslate"><span class="pre">plotting.plot_matrix</span></code> makes it as correlation clustered regions in the Brain.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">h5py</span>
@@ -662,7 +679,8 @@ Correlation matrix shape: (400, 400)
 <img alt="_images/e028605bea1ce7a1a24a8a92ce91c6db8e4258b4a0f364962509c17891ce9cca.png" src="_images/e028605bea1ce7a1a24a8a92ce91c6db8e4258b4a0f364962509c17891ce9cca.png" />
 </div>
 </div>
-<p>##Cutting Percentile</p>
+<p>###<strong>Cutting Percentile</strong>
+As we have seen in the previous cell, the connectome is a dense graph (the adjecency matrix). Therefore to represent our network, we need to pick the top 10 percentile of its weight distribution. Here first we have plotted the distribution of the connectom weights, and then plots the top 10 percentile connectome in the next image. As you can see the output graph is spars and has most informative clusters in different regions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>
@@ -688,9 +706,9 @@ Correlation matrix shape: (400, 400)
 <img alt="_images/5ad49a060ff3b2fc242cab2ec8ada404e8ba4949f6c665b9ba347a3d2d1bc35f.png" src="_images/5ad49a060ff3b2fc242cab2ec8ada404e8ba4949f6c665b9ba347a3d2d1bc35f.png" />
 </div>
 </div>
-</div>
 <div class="section" id="graph-construction">
-<h1>Graph Construction<a class="headerlink" href="#graph-construction" title="Permalink to this heading">#</a></h1>
+<h3><strong>Graph Construction</strong><a class="headerlink" href="#graph-construction" title="Permalink to this heading">#</a></h3>
+<p>After cleaning up the connectome, we can makeup our graph, by calling <code class="docutils literal notranslate"><span class="pre">make_group_graph</span></code>. Please note that the implementation of the below cell is ispired by <a class="reference external" href="https://github.com/main-educational/brain_encoding_decoding/blob/main/src/">here</a>, However it has been slightly modified, to pure adjecency matrix recostruction for the purpose of this note book.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
@@ -783,7 +801,8 @@ Correlation matrix shape: (400, 400)
 </div>
 </div>
 <div class="section" id="random-graph">
-<h1>Random Graph<a class="headerlink" href="#random-graph" title="Permalink to this heading">#</a></h1>
+<h3><strong>Random Graph</strong><a class="headerlink" href="#random-graph" title="Permalink to this heading">#</a></h3>
+<p>Here we also make random graph which its weights has <span class="math notranslate nohighlight">\(w\sim N(0,1)\)</span>, as a base line for comparing the message passing procedure in connectome and random graph. The first image depicts the weight distribution and the second one represents the connectome of the random graph.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -829,9 +848,7 @@ Correlation matrix shape: (400, 400)
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="locading-time-series-to-standard-format">
-<h1>Locading Time series to standard format<a class="headerlink" href="#locading-time-series-to-standard-format" title="Permalink to this heading">#</a></h1>
+<p>In this cell we simply load the dataset with its generalized categories for visualization. Here for this notebook, we use the eight veriosn categories.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
@@ -865,6 +882,15 @@ Correlation matrix shape: (400, 400)
 </div>
 </div>
 </div>
+</div>
+</div>
+<div class="section" id="train-validation-test">
+<h2><strong>Train, Validation, Test</strong><a class="headerlink" href="#train-validation-test" title="Permalink to this heading">#</a></h2>
+<p>In this section, we will talk about the dataset manipulation, and preprocessing stages for GNN netwrok training.</p>
+<div class="section" id="split-dataset">
+<h3><strong>Split Dataset</strong><a class="headerlink" href="#split-dataset" title="Permalink to this heading">#</a></h3>
+<p>Here splilit the dataset to three section: train, validation and test.
+As the first step, the dataset is trasformed into the standard format as implemeted <a class="reference external" href="https://github.com/main-educational/brain_encoding_decoding/blob/main/src/gcn_windows_dataset.py">here</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -951,7 +977,6 @@ See https://numpy.org/devdocs/release/1.25.0-notes.html and the docs for more in
 </div>
 </div>
 </div>
-<p>##Split Dataset</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># split dataset</span>
@@ -1023,7 +1048,11 @@ Labels batch shape: torch.Size([10]); mean 2.9000000953674316
 </div>
 </div>
 </div>
-<p>##BUliding the Model</p>
+</div>
+</div>
+<div class="section" id="building-the-graph-convolutional-neural-network-model">
+<h2><strong>Building the Graph Convolutional Neural Network Model</strong><a class="headerlink" href="#building-the-graph-convolutional-neural-network-model" title="Permalink to this heading">#</a></h2>
+<p>Here we use ChebNet as one the well-know GCN models for graph neural network training. The netwrok consists of three layer of <code class="docutils literal notranslate"><span class="pre">chebconv</span></code> and three fully connected layer followed by a softmax.  <code class="docutils literal notranslate"><span class="pre">gcn</span></code> refers to model based on the Friends dataset connectome, and <code class="docutils literal notranslate"><span class="pre">gcn_rnd</span></code> refers to the model basedd on the random graph.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">gcn_model</span> <span class="kn">import</span> <span class="n">GCN</span>
@@ -1114,7 +1143,9 @@ Labels batch shape: torch.Size([10]); mean 2.9000000953674316
 </div>
 </div>
 </div>
-<p>##Grpah Training</p>
+<div class="section" id="grpah-training">
+<h3><strong>Grpah Training</strong><a class="headerlink" href="#grpah-training" title="Permalink to this heading">#</a></h3>
+<p>Here is the graph training procedure, based on the 25 epochs. as the number of classes is implanced, both of the <code class="docutils literal notranslate"><span class="pre">F1-score</span></code>, and <code class="docutils literal notranslate"><span class="pre">accuracy</span></code> is used for printing in the netwrok output.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">loss_fn</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
@@ -1484,7 +1515,10 @@ Valid metrics:
 </div>
 </div>
 </div>
-<p>##Random grpah Training</p>
+</div>
+<div class="section" id="random-grpah-training">
+<h3><strong>Random grpah Training</strong><a class="headerlink" href="#random-grpah-training" title="Permalink to this heading">#</a></h3>
+<p>Same procedure as explained for the initial graph, happenes for the Random graph training as well.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">loss_fn</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
@@ -1854,6 +1888,10 @@ Valid metrics:
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="other-methods">
+<h3><strong>Other methods</strong><a class="headerlink" href="#other-methods" title="Permalink to this heading">#</a></h3>
+<p>To compare the accuracy of the method with a baseline, we use SVM and DummyClassfier, implemntend in <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>. Then we will print the <code class="docutils literal notranslate"><span class="pre">F1</span> <span class="pre">score</span></code> and <code class="docutils literal notranslate"><span class="pre">accuracy</span></code> for further comparison. In addition, we will also plot the confusion matrix for a detailed analysis of the classifiers.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
@@ -2001,6 +2039,15 @@ See https://numpy.org/devdocs/release/1.25.0-notes.html and the docs for more in
 </div>
 </div>
 </div>
+<div class="section" id="disscusion">
+<h3><strong>Disscusion</strong><a class="headerlink" href="#disscusion" title="Permalink to this heading">#</a></h3>
+<p>As we have seen in above results the accuracy of the <code class="docutils literal notranslate"><span class="pre">gcn</span></code>, and <code class="docutils literal notranslate"><span class="pre">gcn_rnd</span></code> has small differences. Thus, this could be caused either by independency of the underlying graph in the the training and prediction procedure; or it could be caused by the over generalized classes of the dataset. By the way the accuracy of the trained netwroks shows improvement compared to the baseline methods like SVM and Dummy Classifier.</p>
+<p>#<strong>Acknowledgements</strong>
+This is my project during Brain Hack school 2024 in Montreal.
+Before starting the content, I would like to thank the organizers of this event, specially Prof.Piere Bellec to give me this opportunity to participate and mentorship, and also Dr. Marie St-Lauran and Venkatesh Subramani for mentoring me during this experiment.</p>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -2039,17 +2086,8 @@ See https://numpy.org/devdocs/release/1.25.0-notes.html and the docs for more in
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Markdown Files</p>
+        <p class="prev-next-title">Brain Decoding using Beta scores and Graph Neural Networks</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="markdown-notebooks.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Notebooks with MyST Markdown</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div></div>
   
@@ -2069,13 +2107,24 @@ See https://numpy.org/devdocs/release/1.25.0-notes.html and the docs for more in
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Friends Dataset</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#things-dataset">Things Dataset</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-construction">Graph Construction</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#random-graph">Random Graph</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#locading-time-series-to-standard-format">Locading Time series to standard format</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#friends-dataset"><strong>Friends Dataset</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#things-dataset"><strong>Things Dataset</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-construction"><strong>Graph Construction</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#random-graph"><strong>Random Graph</strong></a></li>
 </ul>
-
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-validation-test"><strong>Train, Validation, Test</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#split-dataset"><strong>Split Dataset</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-graph-convolutional-neural-network-model"><strong>Building the Graph Convolutional Neural Network Model</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grpah-training"><strong>Grpah Training</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#random-grpah-training"><strong>Random grpah Training</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-methods"><strong>Other methods</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#disscusion"><strong>Disscusion</strong></a></li>
+</ul>
+</li>
+</ul>
   </nav></div>
 
 </div></div>
