@@ -1,4 +1,4 @@
-# **Brain Decoding using Beta scores and Graph Neural Networks**
+# Brain Decoding using Beta scores and Graph Neural Networks
  
 For this poject, we have access to the Brain activities, and its parcellation. Then the main task is decode the Brain activites into different classes. Normally as the data per voxcel in the Brain is a Fmri signal, as a preprocesing stage, this data is represented by different techniqes. Here for this project, $\beta$ scores as a linear model fitted to the fmri data has role to represent this data. There for after casting the data to the a space called, $\beta$-space, the data has more meaningful representaiton, and also the connectome as the underlying graph connection of the Brain regions is feeded to the Grpah neural netwrok for message passign between different links of this nodes. Eventually, after the trainig the netwrok is trying to do a classification task based on the training data. Here is the over all procedure for this project: 
 ![Link Name](./Perpective.jpg) 
